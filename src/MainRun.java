@@ -5,6 +5,7 @@ import service.BorrowBook;
 import java.util.Scanner;
 
 public class MainRun {
+    private static int countReader;
     private static Reader[] readers;
     private static Book[] books;
     private static BorrowBook[] borrowBooks;
@@ -94,6 +95,40 @@ public class MainRun {
         } while (true);
     }
 
+    private static void createNewReaders() {
+        System.out.println("Nhập số lượng bạn đọc muốn thêm: ");
+        countReader = new Scanner(System.in).nextInt();
+        readers = new Reader[countReader];
+        for (int i = 0; i < readers.length; i++) {
+            Reader reader = new Reader();
+            reader.inputReaderInfo();
+            readers[i] = reader;
+        }
+    }
+
+    private static void displayReaders() {
+        for (Reader reader : readers) {
+            System.out.println(reader);
+        }
+    }
+
+    private static void createNewBooks() {
+        System.out.println("Nhập số lượng sách muốn thêm: ");
+        int countBook = new Scanner(System.in).nextInt();
+        books = new Book[countBook];
+        for (int i = 0; i < books.length; i++) {
+            Book book = new Book();
+            book.inputBookInfo();
+            books[i] = book;
+        }
+    }
+
+    private static void displayBooks() {
+        for (Book book : books) {
+            System.out.println(book);
+        }
+    }
+
     private static void sortBorrowListByBookAmount() {
         if (borrowBooks == null || borrowBooks.length == 0) {
             System.out.println("Bạn cần nhập danh sách cho mượn trước khi sắp xếp!");
@@ -152,18 +187,9 @@ public class MainRun {
             System.out.println("Bạn cần nhập danh sách bạn đọc và đầu sách trước khi cho mượn!");
             return;
         }
-        System.out.println("Nhập số lượng bạn đọc muốn mượn sách: ");
         boolean checked = true;
-        int n;
-        do {
-            n = new Scanner(System.in).nextInt();
-            if (n <= 0 || n > readers.length) {
-                System.out.println("Nhập lại! số lượng bạn đọc muốn mượn sách phải lớn hơn 0 và nhỏ hơn tổng sách: ");
-                checked = false;
-            }
-        } while (!checked);
-        borrowBooks = new BorrowBook[n];
-        for (int i = 0; i < borrowBooks.length; i++) {
+        borrowBooks = new BorrowBook[countReader];
+        for (int i = 0; i < readers.length; i++) {
             System.out.println("Nhập số lượng đầu sách mà bạn " + readers[i].getName() + " muốn mượn: ");
             int k;
             do {
@@ -207,40 +233,6 @@ public class MainRun {
         System.out.println("Danh sách bảng mượn sách của các bạn đọc hiện tại là:");
         for (BorrowBook borrowBook : borrowBooks) {
             System.out.println(borrowBook);
-        }
-    }
-
-    private static void createNewReaders() {
-        System.out.println("Nhập số lượng bạn đọc muốn thêm: ");
-        int countReader = new Scanner(System.in).nextInt();
-        readers = new Reader[countReader];
-        for (int i = 0; i < readers.length; i++) {
-            Reader reader = new Reader();
-            reader.inputReaderInfo();
-            readers[i] = reader;
-        }
-    }
-
-    private static void displayReaders() {
-        for (Reader reader : readers) {
-            System.out.println(reader);
-        }
-    }
-
-    private static void createNewBooks() {
-        System.out.println("Nhập số lượng sách muốn thêm: ");
-        int countBook = new Scanner(System.in).nextInt();
-        books = new Book[countBook];
-        for (int i = 0; i < books.length; i++) {
-            Book book = new Book();
-            book.inputBookInfo();
-            books[i] = book;
-        }
-    }
-
-    private static void displayBooks() {
-        for (Book book : books) {
-            System.out.println(book);
         }
     }
 
